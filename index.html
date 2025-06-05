@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+            <style>.lw { font-size: 60px; }</style>
+        </head>
+        <body>
+            
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Streams en direct</title>
+  <style>
+    body {
+      background-color: #1a0e0e;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      color: #c41d31;
+      text-align: center;
+    }
+    .stream-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .stream {
+      background: linear-gradient(145deg, #4a1d1d, #1a0e0e);
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      overflow: hidden;
+      width: 100%;
+      max-width: 480px;
+    }
+    iframe {
+      display: block;
+      width: 100%;
+      height: 270px;
+      border: none;
+    }
+    .offline {
+      opacity: 0.3;
+    }
+    .stream-name {
+      text-align: center;
+      padding: 10px;
+      background: #300a0a;
+      color: #ffdddd;
+      font-weight: bold;
+    }
+  </style>
+
+
+  <h1>Streams en direct</h1>
+  <div class="stream-container" id="streams"><div class="stream">
+        <iframe src="https://player.twitch.tv/?channel=aidenhakazuki&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">aidenhakazuki</div>
+      </div><div class="stream">
+        <iframe src="https://player.twitch.tv/?channel=ensurilive&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">ensurilive</div>
+      </div><div class="stream">
+        <iframe src="https://player.twitch.tv/?channel=eurydyce&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">eurydyce</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=shiharuru_&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">shiharuru_ (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=aiglefins&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">aiglefins (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=shallou_vt&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">shallou_vt (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=elia_vespera&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">elia_vespera (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=shouyuhikaru&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">shouyuhikaru (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=hungergameuryt&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">hungergameuryt (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=karnillia&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">karnillia (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=komori_kyo&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">komori_kyo (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=nobupixel&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">nobupixel (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=capitaine_orphy&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">capitaine_orphy (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=raisindeloup&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">raisindeloup (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=reibun__&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">reibun__ (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=rorogemini&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">rorogemini (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=shio_ryuo&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">shio_ryuo (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=taku_vtuber&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">taku_vtuber (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=lebaron_seras&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">lebaron_seras (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=tylupo&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">tylupo (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=endoku_chan&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">endoku_chan (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=ludooki&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">ludooki (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=nozomiexploratrice&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">nozomiexploratrice (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=kichi_chii&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">kichi_chii (hors ligne)</div>
+      </div><div class="stream offline">
+        <iframe src="https://player.twitch.tv/?channel=seedity&amp;parent=localhost" allowfullscreen=""></iframe>
+        <div class="stream-name">seedity (hors ligne)</div>
+      </div></div>
+
+  <script>
+    const channels = [
+      "shiharuru_", "aidenhakazuki", "aiglefins", "shallou_vt", "elia_vespera",
+      "eurydyce", "ensurilive", "shouyuhikaru", "hungergameuryt", "karnillia",
+      "komori_kyo", "nobupixel", "capitaine_orphy", "raisindeloup", "reibun__",
+      "rorogemini", "shio_ryuo", "taku_vtuber", "lebaron_seras", "tylupo",
+      "endoku_chan", "ludooki", "nozomiexploratrice", "kichi_chii", "seedity"
+    ];
+
+    const clientId = '1mpsdeq06om5kmeq4trbv1hnjuo3uw'; // À remplacer
+    const oauthToken = 'rqiginxc5jj1sgm8hn0qxyxm409c1h'; // À remplacer
+
+    const headers = {
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${oauthToken}`
+    };
+
+    async function fetchStreams() {
+      const res = await fetch(`https://api.twitch.tv/helix/streams?user_login=${channels.join('&user_login=')}`, { headers });
+      const data = await res.json();
+      return data.data;
+    }
+
+    function createStream(channel, online) {
+      const div = document.createElement('div');
+      div.className = `stream${online ? '' : ' offline'}`;
+      div.innerHTML = `
+        <iframe src="https://player.twitch.tv/?channel=${channel}&parent=localhost" allowfullscreen></iframe>
+        <div class="stream-name">${channel}${online ? '' : ' (hors ligne)'}</div>
+      `;
+      return div;
+    }
+
+    async function displayStreams() {
+      const onlineStreams = await fetchStreams();
+      const onlineChannels = onlineStreams.map(s => s.user_login);
+
+      const container = document.getElementById('streams');
+
+      // En ligne d'abord
+      onlineChannels.forEach(channel => {
+        container.appendChild(createStream(channel, true));
+      });
+      // Puis hors ligne
+      channels.filter(c => !onlineChannels.includes(c)).forEach(channel => {
+        container.appendChild(createStream(channel, false));
+      });
+    }
+
+    displayStreams();
+  </script>
+
+
+            <script>// Write JavaScript here</script>
+        
+    
+</body>
