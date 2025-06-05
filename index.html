@@ -66,56 +66,63 @@
   <div class="stream-container" id="streams"></div>
 
   <script>
-    const channels = [
-      "shiharuru_", "aidenhakazuki", "aiglefins", "shallou_vt", "elia_vespera",
-      "eurydyce", "ensurilive", "shouyuhikaru", "hungergameuryt", "karnillia",
-      "komori_kyo", "nobupixel", "capitaine_orphy", "raisindeloup", "reibun__",
-      "rorogemini", "shio_ryuo", "taku_vtuber", "lebaron_seras", "tylupo",
-      "endoku_chan", "ludooki", "nozomiexploratrice", "kichi_chii", "seedity"
-    ];
+  const channels = [
+    "shiharuru_", "aidenhakazuki", "aiglefins", "shallou_vt", "elia_vespera",
+    "eurydyce", "ensurilive", "shouyuhikaru", "hungergameuryt", "karnillia",
+    "komori_kyo", "nobupixel", "capitaine_orphy", "raisindeloup", "reibun__",
+    "rorogemini", "shio_ryuo", "taku_vtuber", "lebaron_seras", "tylupo",
+    "endoku_chan", "ludooki", "nozomiexploratrice", "kichi_chii", "seedity"
+  ];
 
-    const clientId = '1mpsdeq06om5kmeq4trbv1hnjuo3uw'; // À remplacer par le tien
-    const oauthToken = 'rqiginxc5jj1sgm8hn0qxyxm409c1h'; // À remplacer aussi
+  const clientId = '1mpsdeq06om5kmeq4trbv1hnjuo3uw'; // Garde ton client ID
 
+  // Appelle ton backend Vercel pour obtenir un token frais
+  async function getToken() {
+    const res = await fetch("https://twitch-token-api.vercel.app/api/token");
+    const data = await res.json();
+    return data.access_token;
+  }
+
+  async function fetchStreams(token) {
     const headers = {
       'Client-ID': clientId,
-      'Authorization': `Bearer ${oauthToken}`
+      'Authorization': `Bearer ${token}`
     };
 
-    async function fetchStreams() {
-      const res = await fetch(`https://api.twitch.tv/helix/streams?user_login=${channels.join('&user_login=')}`, { headers });
-      const data = await res.json();
-      return data.data;
-    }
+    const res = await fetch(`https://api.twitch.tv/helix/streams?user_login=${channels.join('&user_login=')}`, { headers });
+    const data = await res.json();
+    return data.data;
+  }
 
-    function createStream(channel, online) {
-      const div = document.createElement('div');
-      div.className = `stream${online ? '' : ' offline'}`;
-      div.innerHTML = `
-        <iframe src="https://player.twitch.tv/?channel=${channel}&parent=shiharururu.github.io" allowfullscreen></iframe>
-        <div class="stream-name">${channel}${online ? '' : ' (hors ligne)'}</div>
-      `;
-      return div;
-    }
+  function createStream(channel, online) {
+    const div = document.createElement('div');
+    div.className = `stream${online ? '' : ' offline'}`;
+    div.innerHTML = `
+      <iframe src="https://player.twitch.tv/?channel=${channel}&parent=shiharururu.github.io" allowfullscreen></iframe>
+      <div class="stream-name">${channel}${online ? '' : ' (hors ligne)'}</div>
+    `;
+    return div;
+  }
 
-    async function displayStreams() {
-      const onlineStreams = await fetchStreams();
-      const onlineChannels = onlineStreams.map(s => s.user_login);
+  async function displayStreams() {
+    const token = await getToken(); // Obtiens un token automatiquement
+    const onlineStreams = await fetchStreams(token);
+    const onlineChannels = onlineStreams.map(s => s.user_login);
 
-      const container = document.getElementById('streams');
+    const container = document.getElementById('streams');
 
-      // D'abord en ligne
-      onlineChannels.forEach(channel => {
-        container.appendChild(createStream(channel, true));
-      });
+    // Streams en ligne
+    onlineChannels.forEach(channel => {
+      container.appendChild(createStream(channel, true));
+    });
 
-      // Ensuite hors ligne
-      channels.filter(c => !onlineChannels.includes(c)).forEach(channel => {
-        container.appendChild(createStream(channel, false));
-      });
-    }
+    // Streams hors ligne
+    channels.filter(c => !onlineChannels.includes(c)).forEach(channel => {
+      container.appendChild(createStream(channel, false));
+    });
+  }
 
-    displayStreams();
-  </script>
+  displayStreams();
+</script>
 </body>
 </html>
