@@ -4,78 +4,151 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Streams en direct</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
   <style>
+    * {
+      box-sizing: border-box !important;
+    }
+
     body {
-      background-color: #1a0e0e;
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
+      background-color: transparent;
+      color: black;
+      font-family: 'Inter', sans-serif;
       padding: 20px;
       margin: 0;
     }
-    h1 {
-      color: #c41d31;
-      text-align: center;
+
+    /* En-tête / Bouton Retour */
+    header {
+      padding: 10px 0 20px 0;
+      text-align: left;
     }
+
+    .btn-retour {
+      display: inline-block;
+      background: #ffffff;
+      color: black;
+      padding: 10px 22px;
+      border-radius: 12px;
+      border: 2px solid black;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 4px 4px 0px black;
+      transition: all 0.1s ease;
+    }
+
+    .btn-retour:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px black;
+    }
+
+    h1 {
+      color: black;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      letter-spacing: -0.5px;
+    }
+
+    /* Structure Grid pour les streams */
     .stream-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
+      gap: 35px 30px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    .stream {
-      background: linear-gradient(145deg, #4a1d1d, #1a0e0e);
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-      overflow: hidden;
+
+    /* Wrapper pour l'effet Néo-Brutalisme sans z-index négatif */
+    .stream-card-wrapper {
+      position: relative !important;
       width: 100%;
       max-width: 480px;
     }
+
+    .rectangle-neobrut {
+      position: absolute !important;
+      top: 10px;
+      left: 10px;
+      width: 100%;
+      height: 100%;
+      background-color: #F53D3D !important;
+      border: 2px solid black;
+      border-radius: 15px;
+      z-index: 1 !important;
+    }
+
+    .stream {
+      position: relative !important;
+      z-index: 2 !important;
+      background: #ffffff;
+      border: 2px solid black;
+      border-radius: 15px;
+      overflow: hidden;
+      width: 100%;
+    }
+
     iframe {
       display: block;
       width: 100%;
       height: 270px;
       border: none;
+      border-bottom: 2px solid black;
     }
-    .offline {
-      opacity: 0.3;
+
+    /* Transparence si hors ligne */
+    .stream-card-wrapper.offline {
+      opacity: 0.55;
     }
+
     .stream-name {
       text-align: center;
-      padding: 10px;
-      background: #300a0a;
-      color: #ffdddd;
-      font-weight: bold;
+      padding: 12px 15px;
+      background: #ffffff;
+      color: black;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    @media (max-width: 500px) {
+      iframe {
+        height: 210px;
+      }
     }
   </style>
 </head>
 <body>
-  <header style="background: linear-gradient(160deg, #3c0c10, #1a0e0e); padding: 30px 0; text-align: left; border-bottom: 1px solid #a22; font-family: 'Sora', sans-serif;
-">
-    
 
-  <!-- Bouton Contact -->
-  <div>
-    <a href="https://pipouchaos-land.carrd.co/"
-       style="background: #C41D31; color: white; padding: 10px 25px; border-radius: 5px; text-decoration: none; font-weight: bold;">
-      Retour
-    </a>
-  </div>
+  <header>
+    <div>
+      <a href="https://pipouchaos-land.carrd.co/" class="btn-retour">
+        ← Retour
+      </a>
+    </div>
+  </header>
 
-</header>
   <h1>Streams en direct</h1>
+  
   <div class="stream-container" id="streams"></div>
 
   <script>
   const channels = [
     "shiharuru_", "aidenhakazuki", "aiglefins",
-    "suneetoo", "shouyuhikaru", "hungerneko", "karnillia",
-    "komori_kyo", "reibun__", "rorogemini", "shio_ryuo", "taku_vtuber",
-    "lebaron_seras", "nozomiexploratrice", "kichi_chii", "seedity", "shiiirome"
+    "suneetoo", "shouyuhikaru", "karnillia",
+    "komori_kyo", "rorogemini", "shio_ryuo", "taku_vtuber",
+    "lebaron_seras", "nozomiexploratrice", "kichi_chii", "seedity"
   ];
 
-  const clientId = '1mpsdeq06om5kmeq4trbv1hnjuo3uw'; // Garde ton client ID
+  const clientId = '1mpsdeq06om5kmeq4trbv1hnjuo3uw';
 
-  // Appelle ton backend Vercel pour obtenir un token frais
   async function getToken() {
     const res = await fetch("https://twitch-token-api.vercel.app/api/token");
     const data = await res.json();
@@ -94,17 +167,21 @@
   }
 
   function createStream(channel, online) {
-    const div = document.createElement('div');
-    div.className = `stream${online ? '' : ' offline'}`;
-    div.innerHTML = `
-      <iframe src="https://player.twitch.tv/?channel=${channel}&parent=shiharururu.github.io" allowfullscreen></iframe>
-      <div class="stream-name">${channel}${online ? '' : ' (hors ligne)'}</div>
+    const wrapper = document.createElement('div');
+    wrapper.className = `stream-card-wrapper${online ? '' : ' offline'}`;
+    
+    wrapper.innerHTML = `
+      <div class="rectangle-neobrut"></div>
+      <div class="stream">
+        <iframe src="https://player.twitch.tv/?channel=${channel}&parent=shiharururu.github.io" allowfullscreen></iframe>
+        <div class="stream-name">${channel}${online ? '' : ' (hors ligne)'}</div>
+      </div>
     `;
-    return div;
+    return wrapper;
   }
 
   async function displayStreams() {
-    const token = await getToken(); // Obtiens un token automatiquement
+    const token = await getToken();
     const onlineStreams = await fetchStreams(token);
     const onlineChannels = onlineStreams.map(s => s.user_login);
 
@@ -122,6 +199,6 @@
   }
 
   displayStreams();
-</script>
+  </script>
 </body>
 </html>
