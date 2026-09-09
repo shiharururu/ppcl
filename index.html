@@ -68,10 +68,17 @@
 
     /* Wrapper pour l'effet Néo-Brutalisme sans z-index négatif */
     .stream-card-wrapper {
-      position: relative !important;
-      width: 100%;
-      max-width: 480px;
-    }
+  position: relative !important;
+  width: 380px;
+}
+
+iframe {
+  display: block;
+  width: 380px !important;
+  height: 214px !important; /* Hauteur fixe pour du 16:9 avec 380px de large */
+  border: none;
+  border-bottom: 2px solid black;
+}
 
     .rectangle-neobrut {
       position: absolute !important;
